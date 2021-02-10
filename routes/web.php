@@ -20,9 +20,12 @@ Route::get('/account', [backendController::class, 'getAccount']);
 Route::get('/adminpanel', [backendController::class, 'userAdmin']);
 Route::get('/create-forest', [backendController::class, 'createForestConf']);
 Route::post('/submit-forest',[backendController::class, 'addForestConf']);
+Route::post('/add-pictures/{id}/{redirect}',[backendController::class, 'addPictures']);
 Route::get('/slide-show/{id}', [backendController::class, 'getPictures']);
 
 Route::delete('/deleteSubmittion/{id}', [backendController::class, 'deleteSubmitedForest']);
+Route::delete('/deletepic/{id}', [backendController::class, 'deletePicture']);
+Route::delete('/destroyUser/{id}', [backendController::class, 'deleteUser']);
 Route::get('/getsubmitedForest/{id}', [backendController::class, 'getSubmitedForest']);
 Route::post('/updatesubmitedForest', [backendController::class, 'updateSubmitedForest']);
 

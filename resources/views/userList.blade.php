@@ -2,10 +2,10 @@
 @section('content')
 
 <body style="background-color:#e4eaec">
-
+@include('layouts.confirmDelete')
     <div class="pt-5">
         <div class="row justify-content-center">
-            <div class="col-md-4">
+            <div class="col-md-5">
                 <div class="card">
                     <div class="card-header ">{{ __('User List') }}</div>
                     <div class="card-body">
@@ -21,6 +21,7 @@
                                         <th>Email</th>
                                         <th>Role</th>
                                         <th class="col">Change</th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -32,7 +33,7 @@
                                     <tr>
                                         <td>
                                             <div class="col-xs-1">
-                                                
+
                                                 <input name="userids[]" type="text" value="{{$user->id}}" class="form-control " readonly>
                                             </div>
                                         </td>
@@ -64,6 +65,9 @@
                                                     @endfor
                                             </select>
                                         </td>
+                                        <td><button style="width: 35px;" type="button" id="deleteButton" data-toggle="modal" data-target="#exampleModal" name="{{$user->id}}" class="btn btn-outline-danger btn-sm">
+                                                <i class="fa fa-trash"></i>
+                                            </button></td>
                                     </tr>
                                     @endforeach
                                 </tbody>
@@ -92,25 +96,25 @@
                             @csrf
                             @include('auth.registerForm')
                             <div class="from-group">
-                                
-                            <select class="form-control @error('SelectedRole') is-invalid @enderror" name="SelectedRole" >
-                                <option value="">Select Role...</option>
-                                @for($i = 0; $i < count($roles) ; $i++) <option value="{{$roles[$i]->id}}">
-                                    {{$roles[$i]->name}}
-                                    </option>
-                                    @endfor
-                            </select>
-                            @error('SelectedRole')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
+
+                                <select class="form-control @error('SelectedRole') is-invalid @enderror" name="SelectedRole">
+                                    <option value="">Select Role...</option>
+                                    @for($i = 0; $i < count($roles) ; $i++) <option value="{{$roles[$i]->id}}">
+                                        {{$roles[$i]->name}}
+                                        </option>
+                                        @endfor
+                                </select>
+                                @error('SelectedRole')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
                                 @enderror
                             </div>
                             <br>
                             <div class="from-group">
-                                
-                            <input name="form2" value="Register new user" type="submit" class="btn btn-primary float-right">
-                        </div>
+
+                                <input name="form2" value="Register new user" type="submit" class="btn btn-primary float-right">
+                            </div>
                         </form>
 
 
@@ -120,7 +124,9 @@
             </div>
         </div>
     </div>
-
-
+    <script src="{{ asset('dist/js/deleteFunction.js')}}"></script>
+    <script type="text/javascript">
+        checkDelete("destroyUser/");
+    </script>
 </body>
 @endsection

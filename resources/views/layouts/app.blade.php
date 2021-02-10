@@ -38,7 +38,13 @@
 
 
   @auth()
-  <body class="w3-animate-left" style="background-color:#e4eaec"> 
+  <body class="w3-animate-left" style="background-image: linear-gradient(#475463,#616f80);"> 
+    <!-- @if (\Request::is('slide-show/*}'))   -->
+    <!-- dark -->
+    <!-- @else -->
+      <!-- <body class="w3-animate-left" style="background-color:#e4eaec">  -->
+    <!-- @endif -->
+  
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
       <a class="navbar-brand col-md-1" href="{{ url('/adminpanel') }}">

@@ -22,7 +22,7 @@ class CreatePicsTable extends Migration
             //$table->foreign('forest_id')->references('id')->on('forests');
            // $table->integer('forest_id')->unsigned();
            // $table->foreignId('forest_id')->constrained('forests');
-            $table->foreignId('user_id')->constrained('users');
+            // $table->foreignId('user_id')->constrained('users');
             $table->foreignId('forest_id')->constrained('forests');
             $table->timestamps();
            
