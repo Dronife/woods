@@ -173,16 +173,17 @@ class backendController extends Controller
     {
         
         $pictureCountRaw = backendController::getPictureCount(); 
-
+        $picsForest_ID = -1;
         for($i = 0; $i < count($pictureCountRaw) ; $i++) {
             if ($pictureCountRaw[$i]->forest_id == $id) {
                 $picsForest_ID = $i;
                 break;
             }
         }
-                                                                                    
-        $pictureCount = $pictureCountRaw[$picsForest_ID]->count;
-        // dd($pictureCount);
+        if($picsForest_ID != -1)                                                                         
+            $pictureCount = $pictureCountRaw[$picsForest_ID]->count;
+        else
+            $pictureCount = 0;
 
         //dd(count($pictureCount));
         $pics = DB::table('pics')
@@ -331,10 +332,31 @@ class backendController extends Controller
     public function addForestConf(Request $request)
     {
 
+        $types = DB::table('types')
+        ->select(
+            'value'
+        )
+        ->where('id',$request->type)
+        ->get();
+
+        $age = DB::table('ages')
+        ->select(
+            'value'
+        )
+        ->where('id',$request->age)
+        ->get();
+          
+        $lastPrice = $request->area*$types[0]->value*$age[0]->value;
+
+
         $values = [
             $request->surname, $request->lastname, $request->phone, $request->email,
-            $request->area, $request->type, $request->age, $request->price, Auth::id()
+            $request->area, $request->type, $request->age,  $lastPrice , Auth::id()
         ];
+
+        
+
+
 
         DB::insert("insert into forests (surname, lastname, phone, email, area, typeid, ageid, price,userid)
           values (?,?,?,?,?,?,?,?,?)", $values);
@@ -343,21 +365,53 @@ class backendController extends Controller
 
 
         backendController::addPictures($request, $forest_id , False);
-        // $count = 1;
 
-        // if ($request->select_file != null) {
-        //     foreach ($request->select_file as $key => $data) {
-        //         $timeExtra = time() + $count;
-        //         $imageName = $timeExtra . '.' . $data->extension();
-        //         $data->move(public_path('images'),  $imageName);
-        //         $dir = "images/" . $imageName;
-        //         //dd( $dir);
-        //         DB::insert("insert into pics (dir, forest_id, user_id)
-        //      values (?,?,?)", [$dir, $forest_id, Auth::id()]);
-        //         $count++;
-        //     }
-        // }
-        return redirect()->to('/login');
+        if($lastPrice > $request->price)
+            return view('idNumberAdd', ['forest_id'=> $forest_id]);
+        else        
+            return redirect()->to('/contacs?lastPrice='.$lastPrice);
+    }
+
+
+    public function forestIDnum(Request $request, $id)
+    {
+       
+         DB::table('forests')
+                ->where('id', $id)
+                ->update((['idnum' => $request->idnum]));
+
+
+        $lastPrice = DB::table('forests')
+        ->select(
+            'price'
+        )
+        ->where('id',$id)
+        ->get();
+        // dd($lastPrice[0]->price);
+        return redirect()->to('/contacs?lastPrice='.$lastPrice[0]->price);
+    }
+
+
+    public function config()
+    {
+        $ages =  DB::table('ages')
+        ->select(
+            DB::raw("COUNT(*) as count")
+        )
+        ->get();
+
+        $types =  DB::table('types')
+        ->select(
+            DB::raw("COUNT(*) as count")
+        )
+        ->get();
+
+        $roles =  DB::table('roles')
+        ->select(
+            DB::raw("COUNT(*) as count")
+        )
+        ->get();
+        return view('config', ['agesCount'=>$ages[0]->count, 'typesCount'=>$types[0]->count, 'roleCount'=> $roles[0]->count]);
     }
 
     public static function addPictures(Request $request, $id , $redirect)
@@ -385,23 +439,48 @@ class backendController extends Controller
 
     }
 
-    public function createBasicEnums()
+    public function configCreateDefaults(Request $request)
     {
-        DB::insert("insert into types (name, value)
-          values (?,?)", ["Boreal", 73]);
-        DB::insert("insert into types (name, value)
-        values (?,?)", ["Mixed", 62]);
-        DB::insert("insert into types (name, value)
-        values (?,?)", ["Temperate", 51]);
+        if($request->has('typeForm')){
+             DB::insert("insert into types (name, value)
+            values (?,?)", ["Boreal", 73]);
+            DB::insert("insert into types (name, value)
+            values (?,?)", ["Mixed", 62]);
+            DB::insert("insert into types (name, value)
+            values (?,?)", ["Temperate", 51]);
+        }elseif($request->has('ageForm')){
+             DB::insert("insert into ages (name, value)
+            values (?,?)", ["Young", 25]);
+            DB::insert("insert into ages (name, value)
+            values (?,?)", ["Wise", 50]);
+        }else
+        {
+            DB::insert("insert into roles (name)
+            values (?)", ["admin"]);
+            DB::insert("insert into roles (name)
+            values (?)", ["user"]);
 
-        DB::insert("insert into ages (name, value)
-        values (?,?)", ["Young", 25]);
-        DB::insert("insert into ages (name, value)
-        values (?,?)", ["Wise", 50]);
+            $user =  DB::table('users')
+            ->select( DB::raw("COUNT(*) as count"))->get();
 
-        DB::insert("insert into toles (name)
-        values (?,?)", ["admin"]);
-        DB::insert("insert into toles (name)
-        values (?,?)", ["user"]);
+            if($user[0]->count >0)
+            {
+                $userAll =  DB::table('users')->get();
+                $roleSimpleUser =  DB::table('roles')->select('id')->where('name','user')->get();
+                
+                for($i=0; $i<count($userAll);$i++)
+                {
+                    
+                     DB::insert("insert into role_user (user_id,role_id) values (?,?)", [$userAll[$i]->id,$roleSimpleUser[0]->id]);
+                }
+            }
+
+            
+        }
+       
+        return redirect()->to('/configuration');
+       
+
+        
     }
 }

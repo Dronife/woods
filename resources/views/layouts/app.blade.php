@@ -66,10 +66,13 @@
               <a class="nav-link" href="{{url('/users')}}">Users</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Configuration</a>
+              <a class="nav-link" href="{{url('/configuration')}}">Configuration</a>
             </li>
+            <!-- <li class="nav-item">
+              <a class="nav-link" href="{{url('/contacs/2800')}}">Contacts</a>
+            </li> -->
             <li class="nav-item">
-              <a class="nav-link" href="#">About</a>
+              <a class="nav-link" href="{{url('/about')}}">About</a>
             </li>
 
         </ul>

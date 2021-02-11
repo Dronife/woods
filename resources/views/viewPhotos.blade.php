@@ -121,6 +121,7 @@
 
     <div class=" container pt-5">
         <div class="row ">
+            @if($pictureCount != 0)
             @for($i=0; $i< $pictureCount; $i++) <div class="col-md-4 col-sm-6 col-xs-6">
                 <div class="border border-dark rounded  pb-3" style="overflow: hidden; background-color:rgba(52, 58, 64,0.35);">
                     <div class="p-3">
@@ -147,6 +148,7 @@
 
 
         @endfor
+        @endif
         <div class="col-md-4 col-sm-6 col-xs-6">
             <div class="border border-dark rounded pb-3" style="overflow: hidden; background-color:rgba(52, 58, 64,0.35);">
                 <div class="p-3">

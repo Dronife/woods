@@ -77,7 +77,7 @@
 
                                             @endif
                                             @else
-                                            <span data-toggle="tooltip" class="badge bg-secondary">No Pictures</span>
+                                            <a href="{{ url('/slide-show/'.$data -> id) }}" data-toggle="tooltip" class="badge bg-secondary">No Pictures</a>
                                             @endif
 
                                     </td>
