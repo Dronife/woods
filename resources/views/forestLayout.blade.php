@@ -39,6 +39,6 @@
                                     </div> 
 
 
-                                    <input id="price" name="price" type="number" min="1" max="10000000" required oninvalid="setCustomValidity('Only numbers')" 
-                                     class="form-control input_user" value="" placeholder="Price">
+                                    <input id="price" name="price" type="number"  required oninvalid="setCustomValidity('Only numbers')" 
+                                     class="form-control " value="" placeholder="Price">
                                     <br>

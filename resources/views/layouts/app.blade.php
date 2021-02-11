@@ -36,8 +36,12 @@
 
 </head>
 
-
   @auth()
+  
+<?php
+$role = Illuminate\Support\Facades\Auth::user()->roles->pluck('name');
+
+ ?>
   <body class="w3-animate-left" style="background-image: linear-gradient(#475463,#616f80);"> 
     <!-- @if (\Request::is('slide-show/*}'))   -->
     <!-- dark -->
@@ -47,7 +51,7 @@
   
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
-      <a class="navbar-brand col-md-1" href="{{ url('/adminpanel') }}">
+      <a class="navbar-brand col-md-1" href="{{ url('/userpanel') }}">
         <!-- {{ config('app.name', 'Laravel') }} -->
         <img style="width:50%; filter:invert(100%); " src="{{asset('dist/img/loginTree.png')}}">
       </a>
@@ -62,12 +66,14 @@
             <li class="nav-item">
               <a class="nav-link" href="{{url('/create-forest')}}">Add Forest</a>
             </li>
+            @if($role[0] == 'admin')
             <li class="nav-item">
               <a class="nav-link" href="{{url('/users')}}">Users</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="{{url('/configuration')}}">Configuration</a>
             </li>
+            @endif
             <!-- <li class="nav-item">
               <a class="nav-link" href="{{url('/contacs/2800')}}">Contacts</a>
             </li> -->

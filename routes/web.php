@@ -10,9 +10,9 @@ Route::get('/', function () {
 });
 Route::get('/checkUser', [backendController::class, 'userCheck']);
 
-Route::get('/userpanel', function () {
-    return view('user');
-});
+// Route::get('/userpanel', function () {
+//     return view('admin');
+// });
 
 Route::get('/contacs', function () {
     return view('contacts');
@@ -27,7 +27,7 @@ Route::get('/about', function () {
 Route::post('/update-general-account', [backendController::class, 'updateGeneralAccount']);
 Route::post('/update-password-account', [backendController::class, 'updatePasswordAccount']);
 Route::get('/account', [backendController::class, 'getAccount']);
-Route::get('/adminpanel', [backendController::class, 'userAdmin']);
+Route::get('/userpanel', [backendController::class, 'userAdmin']);
 Route::get('/create-forest', [backendController::class, 'createForestConf']);
 Route::post('/submit-forest',[backendController::class, 'addForestConf']);
 Route::post('/add-pictures/{id}/{redirect}',[backendController::class, 'addPictures']);

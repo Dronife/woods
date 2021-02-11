@@ -16,10 +16,10 @@
                             <table class="table table-bordered table-striped dataTable dtr-inline" id="myTable">
                                 <thead class="table-dark">
                                     <tr>
-                                        <th>ID#</th>
+                                        <th style="display: none;">ID#</th>
                                         <th>Name</th>
                                         <th>Email</th>
-                                        <th>Role</th>
+                                        <!-- <th>Role</th> -->
                                         <th class="col">Change</th>
                                         <th>Action</th>
                                     </tr>
@@ -31,34 +31,36 @@
                                     @foreach($users as $key => $user)
 
                                     <tr>
-                                        <td>
+                                        <td style="display:none;">
                                             <div class="col-xs-1">
-
-                                                <input name="userids[]" type="text" value="{{$user->id}}" class="form-control " readonly>
-                                            </div>
-                                        </td>
-                                        <td>{{$user->name}}</td>
-                                        <td>{{$user->email}}</td>
-
-                                        <td class="text-center">
                                             @for($i = 0; $i < count($useroles) ; $i++) <?php
                                                                                         if ($useroles[$i]->user_id == $user->id) {
                                                                                             $user_role_index = $i;
                                                                                             $Pass = true;
                                                                                             switch ($useroles[$user_role_index]->name) {
                                                                                                 case 'admin':
-                                                                                                    $badge = "badge bg-danger";
+                                                                                                    $badge = "callout-warning";
                                                                                                     break;
                                                                                                 case 'user':
-                                                                                                    $badge = "badge bg-success";
+                                                                                                    $badge = "callout-success";
                                                                                                     break;
                                                                                             }
                                                                                         }
-                                                                                        ?> @endfor @if($Pass) <span data-toggle="tooltip" class="{{$badge}}">{{$useroles[$user_role_index]->name}}</span>
-                                                @else
-                                                <span data-toggle="tooltip" class="badge bg-secondary">No Role</span>
-                                                @endif
+                                                                                        ?> @endfor 
+                                                <input name="userids[]" type="text" value="{{$user->id}}" class="form-control  " readonly>
+                                            </div>
                                         </td>
+                                        <td>
+                                        <div class="pb-5" style="height: 20px;">
+                                        <div class="callout {{$badge}} " >
+                                            {{$user->name}}
+                                         </div> 
+                                        </div> 
+                                        </td>
+  
+                                        <td>{{$user->email}}</td>
+
+                                        
                                         <td>
                                             <select class="form-control" name="roleOptions[]" id="lol">
                                                 @for($i = 0; $i < count($roles) ; $i++) <option <?php if ($roles[$i]->id == $useroles[$user_role_index]->id) echo  "selected"; ?> value="{{$roles[$i]->id}}">{{$roles[$i]->name}}</option>

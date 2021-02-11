@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\backendController;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -69,12 +70,15 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         
-        return User::create([
+        $user = User::create([
             'name' => $data['name'],
             'username' => $data['username'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
+        $userSimpleId= backendController::role_simple_user_id();
+        backendController::role_userInsert($user->id,$userSimpleId);
+        return $user;
     }
 
    

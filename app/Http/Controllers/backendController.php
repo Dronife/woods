@@ -15,6 +15,9 @@ use Illuminate\Support\Facades\DB;
 
 class backendController extends Controller
 {
+
+    
+
     /**
      * Display a listing of the resource.
      *
@@ -22,38 +25,60 @@ class backendController extends Controller
      */
     public function userCheck()
     {
-        $userRoles = Auth::user()->roles->pluck('name');
-        //  dd($userRoles);
-        if ($userRoles->contains('admin')) {
-
-            return redirect()->to('/adminpanel');
-        }
+        // $userRoles = Auth::user()->roles->pluck('name');
+        
         return redirect()->to('/userpanel');
     }
 
+    public static function urole(){
+        $role =Auth::user()->roles->pluck('name');
+        return $role[0];
+    }
+
+
     public function userAdmin()
-    {
+
+    { 
+
+        $role = backendController::urole();
+        $selectQuery = ['forests.id','surname','lastname','phone','price','area','email','types.name as typeid','ages.name as ageid'];
+        
+        
+            $rawsubmittedCount =  DB::table('forests')
+        ->select(DB::raw("COUNT(*) as count"))
+        // ->where('userid',Auth::user()->id)
+        ->get();
+
+        
         $types = DB::table('forests')
             ->select(
-                'forests.id',
-                'surname',
-                'lastname',
-                'phone',
-                'price',
-                'area',
-                'email',
-                'types.name as typeid',
-                'ages.name as ageid',
+                $selectQuery
+                )
+                ->leftJoin('types', 'forests.typeid', '=', 'types.id')
+                ->leftjoin('ages', 'forests.ageid', '=', 'ages.id')
+                ->get();
+        if($role == 'user'){
+        $types = DB::table('forests')
+        ->select(
+            $selectQuery
             )
             ->leftJoin('types', 'forests.typeid', '=', 'types.id')
             ->leftjoin('ages', 'forests.ageid', '=', 'ages.id')
+            ->where('userid',Auth::user()->id)
             ->get();
-
+            $rawsubmittedCount =  DB::table('forests')
+            ->select(DB::raw("COUNT(*) as count"))
+            ->where('userid',Auth::user()->id)
+            ->get();
+        }
+        // dd( $rawsubmittedCount);
+               
         $pictureCount = backendController::getPictureCount(); 
 
         $config = backendController::getFOrestConf();
-
-        return view('admin', ['types' => $types, 'config' => $config, 'pictureCount'=> $pictureCount]);
+        // dd();           
+        return view('admin', ['types' => $types, 'config' => $config, 'pictureCount'=> $pictureCount,
+         'submittedCount' =>$rawsubmittedCount[0]->count, 'role'=>$role]);
     }
 
     public static function getPictureCount()
@@ -271,6 +296,9 @@ class backendController extends Controller
 
     public function getUsers()
     {
+        if(backendController::urole() == 'user')
+            return redirect()->to('/userpanel');
+            
         $users = DB::table('users')
             ->select('id', 'name', 'email')
             ->get();
@@ -394,6 +422,9 @@ class backendController extends Controller
 
     public function config()
     {
+        if(backendController::urole() == 'user')
+            return redirect()->to('/userpanel');
+
         $ages =  DB::table('ages')
         ->select(
             DB::raw("COUNT(*) as count")
@@ -439,6 +470,19 @@ class backendController extends Controller
 
     }
 
+    public static function role_userInsert($userid, $roleid)
+    {
+        DB::insert("insert into role_user (user_id,role_id) values (?,?)", [$userid,$roleid]);
+    }
+
+    public static function role_simple_user_id()
+    {
+        $roleSimpleUser =  DB::table('roles')->select('id')->where('name','user')->get();
+        return $roleSimpleUser[0]->id;
+    }
+
+
+
     public function configCreateDefaults(Request $request)
     {
         if($request->has('typeForm')){
@@ -466,12 +510,12 @@ class backendController extends Controller
             if($user[0]->count >0)
             {
                 $userAll =  DB::table('users')->get();
-                $roleSimpleUser =  DB::table('roles')->select('id')->where('name','user')->get();
+                $roleSimpleUser =   backendController::role_simple_user_id();
                 
                 for($i=0; $i<count($userAll);$i++)
                 {
+                    backendController::role_userInsert($userAll[$i]->id,$roleSimpleUser);
                     
-                     DB::insert("insert into role_user (user_id,role_id) values (?,?)", [$userAll[$i]->id,$roleSimpleUser[0]->id]);
                 }
             }
 

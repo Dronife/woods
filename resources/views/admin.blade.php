@@ -37,7 +37,7 @@
                 <div class="card">
                     <div class="card-header">{{ __('Submited Forests') }}</div>
                     <div class="card-body">
-
+                    @if($submittedCount > 0)
                         @include('layouts.filterSubmission')
 
                         <table class="table table-bordered table-striped dataTable dtr-inline" id="myTable">
@@ -84,7 +84,7 @@
 
                                     <td>
                                         <div class="row">
-
+                                            @if($role == 'admin')                                                
                                             <div class="btn-group" role="group">
                                                 <button style="width: 35px;" href="javascript:;" data-toggle="modal" data-target=".bd-example-modal-sm" type="button" name="{{$data->id}}" id="editButton" class="btn btn-outline-primary btn-sm">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16">
@@ -95,6 +95,7 @@
                                                 <button style="width: 35px;" type="button" id="deleteButton" data-toggle="modal" data-target="#exampleModal" name="{{$data->id}}" class="btn btn-outline-danger btn-sm">
                                                     <i class="fa fa-trash"></i>
                                                 </button>
+                                                @endif
 
                                                 <button style="width: 35px;" href="#tableCollapse{{$count}}" data-toggle="collapse" aria-controls="tableCollapse{{$count}}" aria-expanded="false" type="button" class="btn btn-outline-dark btn-sm">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
@@ -139,6 +140,13 @@
                                 @endforeach
                             </tbody>
                         </table>
+                        @else
+                        <div class="row">
+                            <div class="text-cented">
+                                You do not have any submited forests!
+                            </div>
+                        </div>
+                        @endif
                     </div>
                 </div>
             </div>
