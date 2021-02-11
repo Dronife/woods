@@ -43,8 +43,6 @@
                         <table class="table table-bordered table-striped dataTable dtr-inline" id="myTable">
                             <thead class="table-dark">
                                 <tr>
-                                    <!-- <th class="collapse multi-collapse" id="tableCollapse">Cell phone</th>
-                                    <th class="collapse multi-collapse" id="tableCollapse">Email</th> -->
                                     <th>Area</th>
                                     <th>Type</th>
                                     <th>Maturity</th>
@@ -60,7 +58,6 @@
                                 @foreach($types as $key => $data)
 
                                 <tr id="mainTable">
-                                    <!-- <td >{{$data->email}}</td> -->
                                     <td>{{$data->area}}</td>
                                     <td>{{$data->typeid}}</td>
                                     <td>{{$data->ageid}}</td>
@@ -122,7 +119,6 @@
                                                 </thead>
                                                 <tbody>
                                                     <tr>
-                                                        <!-- <td>{{substr($data->surname,0,1).". ".$data->lastname }}</td> -->
                                                         <td>{{$data->surname." ".$data->lastname }}</td>
                                                         <td>{{$data->phone}}</td>
                                                         <td>{{$data->email}}</td>

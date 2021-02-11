@@ -10,10 +10,6 @@ Route::get('/', function () {
 });
 Route::get('/checkUser', [backendController::class, 'userCheck']);
 
-// Route::get('/userpanel', function () {
-//     return view('admin');
-// });
-
 Route::get('/contacs', function () {
     return view('contacts');
 });
@@ -23,7 +19,6 @@ Route::get('/about', function () {
 
 
 
-// Route::get('/contacs/{lastPrice}', [backendController::class, 'getAccount']);
 Route::post('/update-general-account', [backendController::class, 'updateGeneralAccount']);
 Route::post('/update-password-account', [backendController::class, 'updatePasswordAccount']);
 Route::get('/account', [backendController::class, 'getAccount']);

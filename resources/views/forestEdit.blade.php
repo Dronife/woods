@@ -2,7 +2,6 @@
     <div class="modal-dialog modal-sm">
       <div class="modal-content">
         <form id="editForest" method="post" enctype="multipart/form-data">
-          <!--style="display:none; width: 35%;"> -->
           @include('forestLayout')
         <input name="submitEdit" type="submit" value="Patvirtinti" class="btn btn-success" id="loginBTN">
         </form>

@@ -25,7 +25,6 @@ class backendController extends Controller
      */
     public function userCheck()
     {
-        // $userRoles = Auth::user()->roles->pluck('name');
         
         return redirect()->to('/userpanel');
     }
@@ -46,7 +45,6 @@ class backendController extends Controller
         
             $rawsubmittedCount =  DB::table('forests')
         ->select(DB::raw("COUNT(*) as count"))
-        // ->where('userid',Auth::user()->id)
         ->get();
 
         
@@ -71,12 +69,11 @@ class backendController extends Controller
             ->where('userid',Auth::user()->id)
             ->get();
         }
-        // dd( $rawsubmittedCount);
-               
+
         $pictureCount = backendController::getPictureCount(); 
 
         $config = backendController::getFOrestConf();
-        // dd();           
+
         return view('admin', ['types' => $types, 'config' => $config, 'pictureCount'=> $pictureCount,
          'submittedCount' =>$rawsubmittedCount[0]->count, 'role'=>$role]);
     }
@@ -114,20 +111,18 @@ class backendController extends Controller
             ->get();
 
         return response()->json($types[0]);
-        // return response()->json(['msg'=>'Updated Successfully', 'success'=>true]);
-        // return $types[0];
     }
     public function deleteSubmitedForest($id)
     {
-        //    $id = $_GET['id'];
+
         DB::table('forests')->where('forests.id', $id)->delete();
-        //return redirect(Request::url('/lease'));
+
         return response()->json([
             'success' => 'Record deleted successfully!'
         ]);
-        // return response()->json(['msg'=>'Updated Successfully', 'success'=>true]);
-        // return $types[0];
     }
+
+
     public function deletePicture($id)
     {
 
@@ -135,31 +130,26 @@ class backendController extends Controller
         unlink($url[0]->dir);
 
         DB::table('pics')->where('pics.id', $id)->delete();
-        //return redirect(Request::url('/lease'));
+
         return response()->json([
             'success' => 'Record deleted successfully!',
             'error' => $url[0]->dir
         ]);
-        // return response()->json(['msg'=>'Updated Successfully', 'success'=>true]);
-        // return $types[0];
     }
+
 
     public function deleteUser($id)
     {
-        //    $id = $_GET['id'];
         DB::table('role_user')->where('user_id', $id)->delete();
         DB::table('users')->where('users.id', $id)->delete();
-        //return redirect(Request::url('/lease'));
+
         return response()->json([
             'success' => 'Record deleted successfully!'
         ]);
-        // return response()->json(['msg'=>'Updated Successfully', 'success'=>true]);
-        // return $types[0];
     }
     public function updateSubmitedForest(Request $request)
     {
 
-        // dd($request->all());
         DB::table('forests')
             ->where('forests.id', $request->forestid)
             ->update(([
@@ -172,7 +162,6 @@ class backendController extends Controller
 
     public function adminRegister(Request $request)
     {
-        // dd($request->all());
         $this->validate($request, [
             'name' => ['required', 'string', 'max:255'],
             'username' => ['required', 'string', 'max:255', 'unique:users'],
@@ -209,15 +198,11 @@ class backendController extends Controller
             $pictureCount = $pictureCountRaw[$picsForest_ID]->count;
         else
             $pictureCount = 0;
-
-        //dd(count($pictureCount));
         $pics = DB::table('pics')
             ->select('dir','pics.id')
             ->where('forest_id', $id)
             ->get();
-        // dd($pics);
         return view('viewPhotos', ['pics' => $pics, 'pictureCount' => $pictureCount, 'id' =>$id]);
-        //return view('viewPhotos');
     }
 
     public function getAccount()
@@ -237,7 +222,6 @@ class backendController extends Controller
             $obj_user->email = $request->email;
             $obj_user->username =  $request->username;
             $obj_user->save();
-            //  dd( $obj_user);
             return redirect()->to('/account');
         } else {
             $this->validate($request, [
@@ -245,7 +229,6 @@ class backendController extends Controller
                 'password' => ['required', 'string', 'min:4', 'confirmed'],
             ]);
         }
-        // $current_password = Auth::User()->password;   
     }
 
     public function updatePasswordAccount(Request $request)
@@ -263,7 +246,6 @@ class backendController extends Controller
             $user_id = Auth::User()->id;
             $obj_user = User::find($user_id);
             $obj_user->password = Hash::make($request['newpassword']);
-            // dd( $obj_user->password);
             $obj_user->save();
             return redirect()->to('/account');
         } else {
@@ -279,11 +261,6 @@ class backendController extends Controller
     public function submitUserList(Request $request)
     {
 
-        //dd(($request->all()));
-
-
-
-
         for ($i = 0; $i < count($request->userids); $i++) {
 
             DB::table('role_user')
@@ -294,11 +271,12 @@ class backendController extends Controller
         return redirect()->to('/users');
     }
 
+
     public function getUsers()
     {
         if(backendController::urole() == 'user')
             return redirect()->to('/userpanel');
-            
+
         $users = DB::table('users')
             ->select('id', 'name', 'email')
             ->get();
@@ -315,11 +293,9 @@ class backendController extends Controller
 
         $roles = DB::table('roles')
             ->get();
-
-        //dd($users);
-
         return view('userList', ['users' => $users, 'useroles' => $useroles, 'roles' => $roles]);
     }
+
 
 
 
@@ -328,28 +304,26 @@ class backendController extends Controller
 
         $userRoles = [Auth::user()->name, Auth::user()->email];
         $config = backendController::getFOrestConf();
-
-        //$selectible = [$config, $userRoles];  
-        // dd($selectible);
         return view('createForest', ['config' => $config, 'userRoles' => $userRoles]);
     }
+
+
     public static function getFOrestConf()
     {
         $types = DB::table('types')
             ->select(
                 'id',
-                'name'
-            )
+                'name')
             ->get();
         $ages = DB::table('ages')
             ->select(
                 'id',
-                'name'
-            )
+                'name')
             ->get();
 
         return  [$types, $ages];
     }
+
 
     public function setUserRole($userid, $roleid)
     {
@@ -357,40 +331,32 @@ class backendController extends Controller
           values (?,?)", [$userid, $roleid]);
     }
 
+
+
     public function addForestConf(Request $request)
     {
 
         $types = DB::table('types')
-        ->select(
-            'value'
-        )
+        ->select('value')
         ->where('id',$request->type)
         ->get();
 
         $age = DB::table('ages')
-        ->select(
-            'value'
-        )
+        ->select('value')
         ->where('id',$request->age)
         ->get();
           
         $lastPrice = $request->area*$types[0]->value*$age[0]->value;
-
 
         $values = [
             $request->surname, $request->lastname, $request->phone, $request->email,
             $request->area, $request->type, $request->age,  $lastPrice , Auth::id()
         ];
 
-        
-
-
-
         DB::insert("insert into forests (surname, lastname, phone, email, area, typeid, ageid, price,userid)
           values (?,?,?,?,?,?,?,?,?)", $values);
 
         $forest_id = DB::getPdo()->lastInsertId();
-
 
         backendController::addPictures($request, $forest_id , False);
 
@@ -408,14 +374,12 @@ class backendController extends Controller
                 ->where('id', $id)
                 ->update((['idnum' => $request->idnum]));
 
-
         $lastPrice = DB::table('forests')
         ->select(
-            'price'
-        )
+            'price')
         ->where('id',$id)
         ->get();
-        // dd($lastPrice[0]->price);
+
         return redirect()->to('/contacs?lastPrice='.$lastPrice[0]->price);
     }
 
@@ -447,15 +411,15 @@ class backendController extends Controller
 
     public static function addPictures(Request $request, $id , $redirect)
     {
-    //  dd($redirect);
+
      $count = 1;
+
         if ($request->select_file != null) {
             foreach ($request->select_file as $key => $data) {
                 $timeExtra = time() + $count;
                 $imageName = $timeExtra . '.' . $data->extension();
                 $data->move(public_path('images'),  $imageName);
                 $dir = "images/" . $imageName;
-                //dd( $dir);
                 DB::insert("insert into pics (dir, forest_id)
              values (?,?)", [$dir, $id]);
                 $count++;
@@ -474,6 +438,7 @@ class backendController extends Controller
     {
         DB::insert("insert into role_user (user_id,role_id) values (?,?)", [$userid,$roleid]);
     }
+
 
     public static function role_simple_user_id()
     {

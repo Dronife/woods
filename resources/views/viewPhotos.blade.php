@@ -128,7 +128,6 @@
                         <div class="hovereffect">
                             <img class="img-responsive shadow " src="{{asset($pics[$i]->dir)}}" alt="" style="width: 350px; height: 350px;">
                             <div class="overlay">
-                                <!-- <h2>Picture {{$i+1}}</h2> -->
                                 <div class="pt-5">
                                     <div class="row justify-content-center p-5">
 
@@ -198,7 +197,6 @@
             if ($(this).attr('id') == "viewPhotoButton") {
                 var url = $(this).attr('name');
                  $("#myImage").attr("src",url);
-                // alert();
             }
 
             });
