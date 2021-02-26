@@ -26,18 +26,25 @@ Route::get('/account', [backendController::class, 'getAccount']);
 Route::post('/update-general-account', [backendController::class, 'updateGeneralAccount']);
 Route::post('/update-password-account', [backendController::class, 'updatePasswordAccount']);
 
-// ***** User control *****
-Route::delete('/destroyUser/{id}', [backendController::class, 'deleteUser']);
-Route::get('/users', [backendController::class, 'getUsers']);
-Route::post('/admin-register-submit', [backendController::class, 'adminRegister']);
+
+Route::group(['middleware' => 'admin'], function() {
+    // ***** User control *****
+    Route::delete('/destroyUser/{id}', [backendController::class, 'deleteUser']);
+    Route::get('/users', [backendController::class, 'getUsers']);
+    Route::post('/admin-register-submit', [backendController::class, 'adminRegister']);
+
+
+    // ***** Configuration *****
+
+    Route::post('/submit-user-list', [backendController::class, 'submitUserList']);
+    Route::post('/configCreateDefaults', [backendController::class, 'configCreateDefaults']);
+    Route::get('/configuration', [backendController::class, 'config']);
+});
 
 
 
-// ***** Configuration *****
 
-Route::post('/submit-user-list', [backendController::class, 'submitUserList']);
-Route::post('/configCreateDefaults', [backendController::class, 'configCreateDefaults']);
-Route::get('/configuration', [backendController::class, 'config']);
+
 
 
 // ***** Forest forests*****

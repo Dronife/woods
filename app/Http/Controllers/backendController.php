@@ -274,8 +274,7 @@ class backendController extends Controller
 
     public function getUsers()
     {
-        if(backendController::urole() == 'user')
-            return redirect()->to('/userpanel');
+       
 
         $users = DB::table('users')
             ->select('id', 'name', 'email')
@@ -386,8 +385,7 @@ class backendController extends Controller
 
     public function config()
     {
-        if(backendController::urole() == 'user')
-            return redirect()->to('/userpanel');
+        
 
         $ages =  DB::table('ages')
         ->select(
