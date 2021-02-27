@@ -1,5 +1,5 @@
 ## Forest buying site
-**About the site:**<br> You are able as a user to submit your forest to sell it. You will the base price for your forest. And after the specialis, who reviews client's submition will contact user with provided phone or email.<br><br>
+**About the site:**<br> You are able as a user to submit your forest to sell it. You will get base price for your forest. And after the specialis, who review client's submition will contact with user via provided phone or email.<br><br>
 **Functions:** 
 1. As a client:
     * You are able to submit forest
