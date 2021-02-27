@@ -64,7 +64,7 @@ $role = Illuminate\Support\Facades\Auth::user()->roles->pluck('name');
         <ul class="navbar-nav pl-5 ">
          
             <li class="nav-item">
-              <a class="nav-link" href="{{url('/create-forest')}}">Add Forest</a>
+              <a class="nav-link" href="{{url('/forest/create')}}">Add Forest</a>
             </li>
             @if($role[0] == 'admin')
             <li class="nav-item">

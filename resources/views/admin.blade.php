@@ -70,11 +70,11 @@
                                                                                     }
 
                                                                                     ?> @endfor @if($picsForest_ID !=-1) @if(($pictureCount[$picsForest_ID ]->count) > 0)
-                                            <a href="{{ url('/slide-show/'.$data -> id) }}" type="button" class="btn btn-success btn-xs" type="button">View Pictures</a>
+                                            <a href="{{ url('/pictures/get/'.$data -> id) }}" type="button" class="btn btn-success btn-xs" type="button">View Pictures</a>
 
                                             @endif
                                             @else
-                                            <a href="{{ url('/slide-show/'.$data -> id) }}" data-toggle="tooltip" class="badge bg-secondary">No Pictures</a>
+                                            <a href="{{ url('/pictures/get/'.$data -> id) }}" data-toggle="tooltip" class="badge bg-secondary">No Pictures</a>
                                             @endif
 
                                     </td>
@@ -151,7 +151,7 @@
     <script src="{{ asset('dist/js/admin.js')}}"></script>
     <script src="{{ asset('dist/js/deleteFunction.js')}}"></script>
     <script type="text/javascript">
-        checkDelete("deleteSubmittion/");
+        checkDelete("forest/delete/");
     </script>
 
 </body>

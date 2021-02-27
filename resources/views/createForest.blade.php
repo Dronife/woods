@@ -16,7 +16,7 @@
                                 <div class="text-center ">
                                     <h1 class="h4 text-gray mb-5">-Add Forest-</h1>
                                 </div>
-                            <form action="{{ url('/submit-forest') }}" method="POST" enctype="multipart/form-data">
+                            <form action="{{ url('/forest/submit') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                                 
 

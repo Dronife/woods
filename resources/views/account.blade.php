@@ -21,7 +21,7 @@
                 <div class="collapse multi-collapse show" id="collapsediv">
                 <div class="card-body">
 
-                    <form name="adminRegister" action="{{ url('/update-general-account') }}" method="POST" enctype="multipart/form-data">
+                    <form name="adminRegister" action="{{ url('/account/update') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group">
                             <input id="username" value="{{$user->username}}" placeholder="Username" type="text" class="form-control @error('name') is-invalid @enderror" name="username">
@@ -77,7 +77,7 @@
                 <div class="collapse multi-collapse" id="collapsediv">
                 <div class="card-body">
 
-                    <form name="adminRegister" action="{{ url('/update-password-account') }}" method="POST" enctype="multipart/form-data">
+                    <form name="adminRegister" action="{{ url('/account/password_update') }}" method="POST" enctype="multipart/form-data">
                         @csrf
 
                         <div class="form-group">

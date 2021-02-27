@@ -10,7 +10,7 @@
                     <div class="card-header ">{{ __('User List') }}</div>
                     <div class="card-body">
 
-                        <form name="userList" action="{{url('/submit-user-list')}}" method="POST" enctype="multipart/form-data">
+                        <form name="userList" action="{{url('/users/submit')}}" method="POST" enctype="multipart/form-data">
                             @csrf
 
                             <table class="table table-bordered table-striped dataTable dtr-inline" id="myTable">
@@ -94,7 +94,7 @@
 
 
 
-                        <form name="adminRegister" action="{{ url('/admin-register-submit') }}" method="POST" enctype="multipart/form-data">
+                        <form name="adminRegister" action="{{ url('/users/new') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             @include('auth.registerForm')
                             <div class="from-group">

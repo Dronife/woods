@@ -60,7 +60,7 @@
                 console.log(index);
                 if ($(this).attr('id') == "editButton") {
                     $.ajax({
-                        url: "getsubmitedForest/{id}",
+                        url: "forest/get/submited/{id}",
                         type: 'GET',
                         data: {
                             'id': index,
