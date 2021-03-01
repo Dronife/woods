@@ -1,3 +1,27 @@
+## Forest buying site
+**About the site:**<br> You are able as a user to submit your forest to sell it. You will get base price for your forest. And after the specialis, who review client's submition will contact with user via provided phone or email.<br><br>
+**Functions:** 
+1. As a client:
+    * You are able to submit forest
+    * Review your submition
+    * Add/Delete photos
+    * Edit account
+2. As an administrator:
+    * Edit submited forest
+    * View all submitions
+    * Add users
+    * Delete users
+    * Change user's role
+    * Add/Delete pictures
+    * Create base level in database (forest types, maturity, user roles
+
+**<br>Important:**<br>
+* Only way to get administrator rights is to change it on database
+* On later update you will be able to insert code-combination to gain administrator rights
+
+##
+
+
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
 
 <p align="center">
