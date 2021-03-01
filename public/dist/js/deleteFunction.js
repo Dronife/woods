@@ -17,10 +17,12 @@ function checkDelete(urli) {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
+            console.log(urli);
             $.ajax({
                 url: urli + index,
                 type: 'delete',
                 data: {
+                    
                     'id': index,
                     // "_token": token,
                 },

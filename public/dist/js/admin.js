@@ -67,17 +67,15 @@
                         },
                         success: function(data) {
                             $("#userid").val(index);
+                            $("#surname").val(data.surname);
                             $("#lastname").val(data.lastname);
                             $("#phone").val(data.phone);
                             $("#email").val(data.email);
                             $("#area").val(data.area);
                             $("#price").val(data.price);
-                            $('[name=type] option').filter(function() {
-                                return ($(this).text() == data.typeid); //To select Blue
-                            }).prop('selected', true);
-                            $('[name=age] option').filter(function() {
-                                return ($(this).text() == data.ageid); //To select Blue
-                            }).prop('selected', true);
+                            $('#type option[value='+data.typeid+']').attr('selected','selected');
+                            $('#age option[value='+data.ageid+']').attr('selected','selected');
+
                         },
                         error: function() {
                             $("#title").html("Nepaejo seneliumbai");
@@ -85,9 +83,7 @@
 
                     });
                 }
-                if ($(this).attr('id') == "deleteButton") {
-                    $('#myTable #mainTable').not(":first").each(function() {});
-                }
+               
 
                 if ($(this).attr('id') == "exitSearch") {
                     $('#search').val('');
@@ -97,33 +93,7 @@
                     });
                 }
 
-                if ($(this).attr('id') == "confirmDelete") {
-                    $.ajaxSetup({
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        }
-                    });
-                    $.ajax({
-                        url: "deleteSubmittion/" + index,
-                        type: 'delete',
-                        data: {
-                            'id': index,
-                            // "_token": token,
-                        },
-                        success: function(data) {
-                            console.log(data);
-                            location.reload();
-
-
-                        },
-                        error: function() {
-                            console.log("did not delete");
-                        }
-
-
-                    });
-                }
-
+               
 
             });
         });

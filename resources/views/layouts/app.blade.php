@@ -160,6 +160,7 @@ $role = Illuminate\Support\Facades\Auth::user()->roles->pluck('name');
   <script src="{{ asset('dist/js/pages/dashboard.js')}}"></script>
   <!-- AdminLTE for demo purposes -->
   <script src="{{ asset('dist/js/demo.js')}}"></script>
+  
 </body>
 
 </html>

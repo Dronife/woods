@@ -13,7 +13,7 @@
                         <div class="col text-center m-3">
                         <form action="{{url('/configCreateDefaults')}}"method="POST" enctype="multipart/form-data">
                                     @csrf
-                            <input type="submit" name="typeForm" class="btn btn-success btn-block" value="Create forest types" @if($typesCount > 0) disabled @endif>
+                            <input type="submit" name="typeForm" class="btn btn-success btn-block" value="Create forest types" @if($types > 0) disabled @endif>
                         </form>
                         </div>
                     </div>
@@ -22,7 +22,7 @@
                     <div class="col text-center m-3">
                     <form action="{{url('/configCreateDefaults')}}"method="POST" enctype="multipart/form-data">
                                     @csrf
-                            <input type="submit" name="ageForm" class="btn btn-success btn-block " value="Create forest maturity" @if($agesCount > 0) disabled @endif>
+                            <input type="submit" name="ageForm" class="btn btn-success btn-block " value="Create forest maturity" @if($ages > 0) disabled @endif>
                         </form>
                     </div>
                     </div>
@@ -30,7 +30,7 @@
                     <div class="col text-center m-3">
                     <form action="{{url('/configCreateDefaults')}}"method="POST" enctype="multipart/form-data">
                                     @csrf
-                            <input type="submit" name=roleForm class="btn btn-success btn-block" value="Create user roles" @if($roleCount > 0) disabled @endif>
+                            <input type="submit" name=roleForm class="btn btn-success btn-block" value="Create user roles" @if($roles > 0) disabled @endif>
                         </form>
                     </div>
                     </div>

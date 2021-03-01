@@ -5,6 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Requests\SubmitNewUser;
+use App\Models\User;
+use App\Models\RoleUser;
+use App\Models\Role;
 
 class UserController extends Controller
 {
@@ -12,23 +16,25 @@ class UserController extends Controller
     {
 
         $users = DB::table('users')
-            ->select('id', 'name', 'email')
-            ->get();
+        ->select('users.id',
+        'users.name',
+        'users.email',
+        'roles.id as roleid',
+        'roles.name as role',
+        'roles.color as color')
+        ->leftjoin('role_user', 'users.id', '=', 'role_user.user_id')
+        ->leftjoin('roles', 'role_user.role_id', '=', 'roles.id')
+        ->get();
 
-        $useroles = DB::table('role_user')
-            ->select('roles.name', 'user_id')
-            ->leftJoin('roles', 'role_user.role_id', '=', 'roles.id')
-            ->get();
+        $useroles = RoleUser::select('role_user.*')
+        ->leftJoin('roles', 'role_user.role_id', '=', 'roles.id')
+        ->get();
 
-        $useroles = DB::table('role_user')
-            ->select('roles.id', 'roles.name', 'user_id')
-            ->leftJoin('roles', 'role_user.role_id', '=', 'roles.id')
-            ->get();
+        $roles = Role::all();
 
-        $roles = DB::table('roles')
-            ->get();
         return view('userList', ['users' => $users, 'useroles' => $useroles, 'roles' => $roles]);
     }
+
 
     
     public function delete_user($id)
@@ -54,25 +60,15 @@ class UserController extends Controller
         return redirect()->to('/users');
     }
 
-    public function new_user(Request $request)
+    public function new_user(SubmitNewUser $request)
     {
-        $this->validate($request, [
-            'name' => ['required', 'string', 'max:255'],
-            'username' => ['required', 'string', 'max:255', 'unique:users'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:4', 'confirmed'],
-            'SelectedRole' => ['required'],
-        ]);
+        
         $newPassword = Hash::make($request['password']);
-        DB::insert("insert into users (name, username, email, password)
-          values (?,?,?,?)", [$request['name'], $request['username'], $request['email'], $newPassword]);
 
+        $user = User::create(["password" => $newPassword]+$request->except(['SelectedRole']));
+        
+        RoleUser::create(['user_id'=>$user->id,'role_id' => $request['SelectedRole']]);
 
-
-        $user_id = DB::getPdo()->lastInsertId();
-
-        DB::insert("insert into role_user (user_id, role_id)
-          values (?,?)", [$user_id, $request['SelectedRole']]);
 
         return redirect()->to('/users');
     }

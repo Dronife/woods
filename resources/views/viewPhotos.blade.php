@@ -191,6 +191,7 @@
     <script src="{{ asset('dist/js/deleteFunction.js')}}"></script>
     <script type="text/javascript">
             checkDelete("/pictures/delete/");
+            
         $(document).ready(function (){
             $('button').click(function() {
 

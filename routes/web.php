@@ -7,6 +7,7 @@ use App\Http\Controllers\AccountController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ForestController;
 use App\Http\Controllers\PhotoController;
+use App\Http\Controllers\ConfigurationController;
 
 use GuzzleHttp\Psr7\Request;
 
@@ -49,8 +50,8 @@ Route::group(['middleware' => 'admin'], function() {
     
     
     // ***** Configuration *****
-    Route::post('/configCreateDefaults', [backendController::class, 'configCreateDefaults']);
-    Route::get('/configuration', [backendController::class, 'config']);
+    Route::post('/configCreateDefaults', [ConfigurationController::class, 'configCreateDefaults']);
+    Route::get('/configuration', [ConfigurationController::class, 'config']);
     
     // ***** Forest(Admin) *****
     Route::group(['prefix' => 'forest'], function() {

@@ -20,13 +20,12 @@ class AdminMiddleware
 
 
         if($role == 'admin')
-        {
             return $next($request);  
-        }else{
-            return redirect()->to('/userpanel');
-        }
+        else
+            abort(code:403);
+        
 
-        return $next($request);  
+
 
         
     }

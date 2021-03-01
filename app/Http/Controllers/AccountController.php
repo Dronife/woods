@@ -22,11 +22,14 @@ class AccountController extends Controller
 
         $current_password = Auth::User()->password;
         if (Hash::check($request['password'], $current_password)) {
+
+            
             $user_id = Auth::User()->id;
             $obj_user = User::find($user_id);
             $obj_user->email = $request->email;
             $obj_user->username =  $request->username;
             $obj_user->save();
+
             return redirect()->to('/account');
         } else {
             $this->validate($request, [

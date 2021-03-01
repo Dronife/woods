@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Models\Pic;
 
 class PhotoController extends Controller
 {
@@ -35,28 +36,15 @@ class PhotoController extends Controller
     public function get($id)
     {
         
-        $pictureCountRaw = backendController::getPictureCount(); 
-        $picsForest_ID = -1;
-        for($i = 0; $i < count($pictureCountRaw) ; $i++) {
-            if ($pictureCountRaw[$i]->forest_id == $id) {
-                $picsForest_ID = $i;
-                break;
-            }
-        }
-        if($picsForest_ID != -1)                                                                         
-            $pictureCount = $pictureCountRaw[$picsForest_ID]->count;
-        else
-            $pictureCount = 0;
-        $pics = DB::table('pics')
-            ->select('dir','pics.id')
-            ->where('forest_id', $id)
-            ->get();
+        $pictureCount = backendController::getPictureCount($id); 
+        $pics = Pic::where('forest_id', $id)->get();
+        
         return view('viewPhotos', ['pics' => $pics, 'pictureCount' => $pictureCount, 'id' =>$id]);
     }
 
 
     
-    public function delete($id)
+    public static function delete($id)
     {
 
         $url = DB::table('pics')->select('dir')->where('id', $id)->get();
