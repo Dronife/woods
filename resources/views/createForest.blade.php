@@ -10,7 +10,7 @@
 
                     <div class="card-body p-0">
                         <div class="row">
-                        <div class="col-lg-6 d-none d-lg-block"><img style="width:100%;" src="dist/img/createWoods.png"></div>
+                        <div class="col-lg-6 d-none d-lg-block"><img style="width:100%;" src="{{ url('dist/img/createWoods.png') }}"></div>
                             <div class="col-lg-6">
                                 <div class=" p-4">
                                 <div class="text-center ">

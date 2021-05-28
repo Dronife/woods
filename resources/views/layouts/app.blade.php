@@ -42,7 +42,7 @@
 $role = Illuminate\Support\Facades\Auth::user()->roles->pluck('name');
 
  ?>
-  <body class="w3-animate-left" style="background-image: linear-gradient(#475463,#616f80);"> 
+  <body class="w3-animate-left" style="background-image: linear-gradient(#aebbd1,#7ebd83);"> 
     <!-- @if (\Request::is('slide-show/*}'))   -->
     <!-- dark -->
     <!-- @else -->
