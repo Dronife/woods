@@ -9,23 +9,7 @@
 
 
 
-    <div class="row justify-content-center">
-        <div class="col-md-7">
-            <div class="card">
-                <div class="card-header">{{ __('Dashboard') }}</div>
-
-                <div class="card-body">
-                    @if (session('status'))
-                    <div class="alert alert-success" role="alert">
-                        {{ session('status') }}
-                    </div>
-                    @endif
-
-                    {{ __('You are logged in!') }}
-                </div>
-            </div>
-        </div>
-    </div>
+    
 
     @include('layouts.editForestModal')
 
@@ -55,7 +39,7 @@
                                 <?php $picsForest_ID = -1;
                                 $Pass = false;
                                 $count = 0; ?>
-                                @foreach($types as $key => $data)
+                                @foreach($submitedForests as $key => $data)
 
                                 <tr id="mainTable">
                                     <td>{{$data->area}}</td>
@@ -64,17 +48,12 @@
                                     <td><?php $price = ($data->price) / 1000;
                                         echo $price . "k"; ?></td>
                                     <td>
-                                        @for($i = 0; $i < count($pictureCount) ; $i++) <?php
-                                                                                    if ($pictureCount[$i]->forest_id == $data->id) {
-                                                                                        $picsForest_ID = $i;
-                                                                                    }
+                                        @if(($pictureCount[$count]) > 0)
+                                            <a href="{{ url('/pictures/get/'.$data -> id) }}" type="button" class="btn btn-success btn-xs" type="button">View Pictures</a>
 
-                                                                                    ?> @endfor @if($picsForest_ID !=-1) @if(($pictureCount[$picsForest_ID ]->count) > 0)
-                                            <a href="{{ url('/slide-show/'.$data -> id) }}" type="button" class="btn btn-success btn-xs" type="button">View Pictures</a>
-
-                                            @endif
+                                           
                                             @else
-                                            <a href="{{ url('/slide-show/'.$data -> id) }}" data-toggle="tooltip" class="badge bg-secondary">No Pictures</a>
+                                            <a href="{{ url('/pictures/get/'.$data -> id) }}" data-toggle="tooltip" class="badge bg-secondary">No Pictures</a>
                                             @endif
 
                                     </td>
@@ -90,8 +69,8 @@
                                                 </button>
 
                                                 <button style="width: 35px;" type="button" id="deleteButton" data-toggle="modal" data-target="#exampleModal" name="{{$data->id}}" class="btn btn-outline-danger btn-sm">
-                                                    <i class="fa fa-trash"></i>
-                                                </button>
+                                                <i class="fa fa-trash"></i>
+                                            </button>
                                                 @endif
 
                                                 <button style="width: 35px;" href="#tableCollapse{{$count}}" data-toggle="collapse" aria-controls="tableCollapse{{$count}}" aria-expanded="false" type="button" class="btn btn-outline-dark btn-sm">
@@ -148,11 +127,12 @@
             </div>
         </div>
     </div>
-    <script src="{{ asset('dist/js/admin.js')}}"></script>
+   
     <script src="{{ asset('dist/js/deleteFunction.js')}}"></script>
+     <script src="{{ asset('dist/js/admin.js')}}"></script>
     <script type="text/javascript">
-        checkDelete("deleteSubmittion/");
+        checkDelete("/forest/delete/");
     </script>
-
+@include('sweetalert::alert')
 </body>
 @endsection

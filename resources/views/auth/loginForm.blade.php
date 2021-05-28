@@ -1,7 +1,8 @@
 <div class="form-group">
 
                             <div class="form-group">
-                                <input placeholder="Enter Username..." id="username" type="username" class="form-control @error('username') is-invalid @enderror" name="username" value="{{ old('username') }}" required autocomplete="username" autofocus>
+                                <input placeholder="Enter Username..." id="username" type="username" class="form-control @error('username') is-invalid @enderror"
+                                 name="username" value="{{ old('username') }}" required autocomplete="username" autofocus>
 
                                 @error('username')
                                     <span class="invalid-feedback" role="alert">

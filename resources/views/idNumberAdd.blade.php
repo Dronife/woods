@@ -9,7 +9,7 @@
                 Please fill identification number of your submited forest
                 </div>
                 <div class="body-card">
-                <form name="adminRegister" action="{{ url('identificationNumber/'.$forest_id) }}" method="POST" enctype="multipart/form-data">
+                <form name="adminRegister" action="{{ url('/forest/identification_Number/'.$forest_id) }}" method="POST" enctype="multipart/form-data">
                             @csrf
                         
                             <div class="p-5">

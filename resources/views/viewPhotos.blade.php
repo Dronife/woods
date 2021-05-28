@@ -154,7 +154,7 @@
                     <div class="hovereffect">
                         <div class="row justify-content-center pt-5" style="width: 350px; height: 350px;">
                             <div class="square centerd pt-5">
-                                <form action="{{ url('/add-pictures/'.$id.'/'.True) }}" method="POST" enctype="multipart/form-data">
+                                <form action="{{ url('/pictures/add/'.$id.'/'.True) }}" method="POST" enctype="multipart/form-data">
                                     @csrf
                                     <label class=" btn  btn-outline-success btn-lx shadow-lg p-3 bg-dark" href="#submitImage" type="button" data-toggle="collapse" aria-controls="submitImage" aria-expanded="false">
 
@@ -190,7 +190,8 @@
 
     <script src="{{ asset('dist/js/deleteFunction.js')}}"></script>
     <script type="text/javascript">
-            checkDelete("/deletepic/");
+            checkDelete("/pictures/delete/");
+            
         $(document).ready(function (){
             $('button').click(function() {
 

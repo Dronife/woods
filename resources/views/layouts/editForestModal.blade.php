@@ -4,7 +4,7 @@
                 <div class="card">
                     <div class="card-header">{{ __('Edit sumbition') }}</div>
                     <div class="card-body">
-                        <form name="userList" action="{{url('/updatesubmitedForest')}}" method="POST" enctype="multipart/form-data">
+                        <form name="userList" action="{{url('/forest/update')}}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <input name="forestid" id="userid" type="text" value="" class="form-control " readonly><br>
                             @include('forestLayout')

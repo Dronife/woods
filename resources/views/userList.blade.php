@@ -5,54 +5,41 @@
 @include('layouts.confirmDelete')
     <div class="pt-5">
         <div class="row justify-content-center">
-            <div class="col-md-5">
+            <div class="col-md-4">
                 <div class="card">
                     <div class="card-header ">{{ __('User List') }}</div>
                     <div class="card-body">
 
-                        <form name="userList" action="{{url('/submit-user-list')}}" method="POST" enctype="multipart/form-data">
+                        <form name="userList" action="{{url('/users/submit')}}" method="POST" enctype="multipart/form-data">
                             @csrf
 
                             <table class="table table-bordered table-striped dataTable dtr-inline" id="myTable">
                                 <thead class="table-dark">
                                     <tr>
                                         <th style="display: none;">ID#</th>
-                                        <th>Name</th>
-                                        <th>Email</th>
+                                        <th >Name</th>
+                                        <th >Email</th>
                                         <!-- <th>Role</th> -->
-                                        <th class="col">Change</th>
-                                        <th>Action</th>
+                                        <th class="col" style="width: 20%">Role</th>
+                                        <th style="width: 10%">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <?php $user_role_index = -1;
                                     $Pass = false;
-                                    $badge = "badge bg-warning"; ?>
+                                    $badge = "badge bg-warning"; 
+                                    $count = 0;?>
                                     @foreach($users as $key => $user)
 
-                                    <tr>
+                                    <tr >
                                         <td style="display:none;">
                                             <div class="col-xs-1">
-                                            @for($i = 0; $i < count($useroles) ; $i++) <?php
-                                                                                        if ($useroles[$i]->user_id == $user->id) {
-                                                                                            $user_role_index = $i;
-                                                                                            $Pass = true;
-                                                                                            switch ($useroles[$user_role_index]->name) {
-                                                                                                case 'admin':
-                                                                                                    $badge = "callout-warning";
-                                                                                                    break;
-                                                                                                case 'user':
-                                                                                                    $badge = "callout-success";
-                                                                                                    break;
-                                                                                            }
-                                                                                        }
-                                                                                        ?> @endfor 
                                                 <input name="userids[]" type="text" value="{{$user->id}}" class="form-control  " readonly>
                                             </div>
                                         </td>
                                         <td>
                                         <div class="pb-5" style="height: 20px;">
-                                        <div class="callout {{$badge}} " >
+                                        <div class="" >
                                             {{$user->name}}
                                          </div> 
                                         </div> 
@@ -61,9 +48,9 @@
                                         <td>{{$user->email}}</td>
 
                                         
-                                        <td>
+                                        <td class="table-{{$user->color}}">
                                             <select class="form-control" name="roleOptions[]" id="lol">
-                                                @for($i = 0; $i < count($roles) ; $i++) <option <?php if ($roles[$i]->id == $useroles[$user_role_index]->id) echo  "selected"; ?> value="{{$roles[$i]->id}}">{{$roles[$i]->name}}</option>
+                                                @for($i = 0; $i < count($roles) ; $i++) <option <?php if ($roles[$i]->id == $user->roleid) echo  "selected"; ?> value="{{$roles[$i]->id}}">{{$roles[$i]->name}}</option>
                                                     @endfor
                                             </select>
                                         </td>
@@ -74,7 +61,7 @@
                                     @endforeach
                                 </tbody>
                             </table>
-                            <input name="form1" type="submit" class="btn btn-success float-right">
+                            <input name="form1" type="submit" value="Change roles" class="btn btn-success float-right">
                         </form>
 
                     </div>
@@ -94,7 +81,7 @@
 
 
 
-                        <form name="adminRegister" action="{{ url('/admin-register-submit') }}" method="POST" enctype="multipart/form-data">
+                        <form name="adminRegister" action="{{ url('/users/new') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             @include('auth.registerForm')
                             <div class="from-group">
@@ -128,7 +115,7 @@
     </div>
     <script src="{{ asset('dist/js/deleteFunction.js')}}"></script>
     <script type="text/javascript">
-        checkDelete("destroyUser/");
+        checkDelete("/users/destroy/");
     </script>
 </body>
 @endsection

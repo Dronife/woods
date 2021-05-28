@@ -42,7 +42,7 @@
 $role = Illuminate\Support\Facades\Auth::user()->roles->pluck('name');
 
  ?>
-  <body class="w3-animate-left" style="background-image: linear-gradient(#475463,#616f80);"> 
+  <body class="w3-animate-left" style="background-image: linear-gradient(#aebbd1,#7ebd83);"> 
     <!-- @if (\Request::is('slide-show/*}'))   -->
     <!-- dark -->
     <!-- @else -->
@@ -64,7 +64,7 @@ $role = Illuminate\Support\Facades\Auth::user()->roles->pluck('name');
         <ul class="navbar-nav pl-5 ">
          
             <li class="nav-item">
-              <a class="nav-link" href="{{url('/create-forest')}}">Add Forest</a>
+              <a class="nav-link" href="{{url('/forest/create')}}">Add Forest</a>
             </li>
             @if($role[0] == 'admin')
             <li class="nav-item">
@@ -160,6 +160,7 @@ $role = Illuminate\Support\Facades\Auth::user()->roles->pluck('name');
   <script src="{{ asset('dist/js/pages/dashboard.js')}}"></script>
   <!-- AdminLTE for demo purposes -->
   <script src="{{ asset('dist/js/demo.js')}}"></script>
+  
 </body>
 
 </html>
